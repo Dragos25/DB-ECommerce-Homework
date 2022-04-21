@@ -1,6 +1,8 @@
 package com.example.market.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.*;
@@ -8,6 +10,8 @@ import java.util.List;
 
 @Entity(name="carts")
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Cart implements Comparable<Cart>{
 
     @Id
