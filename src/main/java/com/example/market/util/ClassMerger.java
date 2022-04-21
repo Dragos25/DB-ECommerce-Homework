@@ -2,7 +2,9 @@ package com.example.market.util;
 
 import java.lang.reflect.Field;
 
+
 public class ClassMerger {
+    //combina 2 obiecte, unde e null pe un camp in unul, ia datele din al doilea
     public static <T> T mergeObjects(T first, T second) throws IllegalAccessException, InstantiationException {
         Class<?> clazz = first.getClass();
         Field[] fields = clazz.getDeclaredFields();

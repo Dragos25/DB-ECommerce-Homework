@@ -15,11 +15,13 @@ import java.util.List;
 public class ProductController {
     private final ProductService productService;
 
+    //get all products
     @GetMapping("/getAll")
     public List<Product> getAll(){
         return productService.getAll();
     }
 
+    //get a product by id
     @GetMapping("/get/{id}")
     public ResponseEntity<Product> getProduct(@PathVariable("id") Integer productId){
         Product product = productService.getById(productId);
@@ -29,6 +31,7 @@ public class ProductController {
         return ResponseEntity.status(HttpStatus.OK).body(product);
     }
 
+    //add a new product
     @PostMapping("/new")
     public Product add(@RequestBody Product product){
         return productService.add(product);

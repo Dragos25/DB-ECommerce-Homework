@@ -8,7 +8,7 @@ import com.example.market.repository.UserRepository;
 import com.example.market.repository.WishlistRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -33,7 +33,7 @@ public class WishlistService {
         Product product = p.get();
         Wishlist wishlist = getWishlist(userId);
         for(Product prod : wishlist.getProductList()){
-            if(prod.getId()==productId) return wishlist;
+            if(prod.getId()==productId) return wishlist; //if the product is already in the wishlist, just return the current wishlist
         }
         wishlist.getProductList().add(product);
         return wishlistRepository.save(wishlist);
@@ -48,8 +48,13 @@ public class WishlistService {
         Wishlist wishlist = getWishlist(userId);
         List<Product> products = wishlist.getProductList();
         products = products.stream().filter(p ->p.getId().equals(p.getId())).collect(Collectors.toList());
-        System.out.println(products.size());
         wishlist.setProductList(products);
+        return wishlistRepository.save(wishlist);
+    }
+
+    public Wishlist clear(Integer id){
+        Wishlist wishlist = getWishlist(id);
+        wishlist.setProductList(new ArrayList<>()); //dont delete the wishlist, only empty its product list
         return wishlistRepository.save(wishlist);
     }
 }

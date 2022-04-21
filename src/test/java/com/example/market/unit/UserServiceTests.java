@@ -31,7 +31,7 @@ public class UserServiceTests {
 
     @Test
     void givenUserId_whenGetById_thenSucceed(){
-        User user = new User(1,"Gigel", "Marcel","marcel@mail.com",null, null);
+        User user = new User(1,"Gigel", "Marcel","marcel@mail.com",null, null, null);
         Mockito.when(userRepository.findById(1)).thenReturn(java.util.Optional.of(user));
         User user2 = userService.findById(1);
         assert user.equals(user2);
@@ -47,7 +47,7 @@ public class UserServiceTests {
 
     @Test
     void givenUser_whenAdd_thenReturnUser(){
-        User user = new User(1,"Gigel", "Marcel","marcel@mail.com",null, null);
+        User user = new User(1,"Gigel", "Marcel","marcel@mail.com",null, null, null);
         Mockito.when(userRepository.save(user)).thenReturn(user);
         User user2 = userService.add(user);
         assert user.equals(user2);
@@ -56,7 +56,7 @@ public class UserServiceTests {
 
     @Test
     void givenUserId_whenUserExistsAndDelete_thenReturnTrue(){
-        User user = new User(1,"Gigel", "Marcel","marcel@mail.com",null, null);
+        User user = new User(1,"Gigel", "Marcel","marcel@mail.com",null, null, null);
         Mockito.when(userRepository.findById(1)).thenReturn(Optional.of(user));
         assert userService.delete(user.getId());
     }

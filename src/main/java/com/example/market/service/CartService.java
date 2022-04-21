@@ -10,7 +10,7 @@ import com.example.market.repository.ProductRepository;
 import com.example.market.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -35,16 +35,21 @@ public class CartService {
         Cart cart = getCart(userId);
         if (cart == null)
             return null;
-        if (product.getStock() - quantity < 0) throw new QuantityTooHighException("Not enough stock");
+        if (product.getStock() - quantity < 0) {
+            throw new QuantityTooHighException("Not enough stock");
+        }
         product.setStock(product.getStock() - quantity);
         productRepository.save(product);
+
         List<CartProduct> productList = cart.getProductList();
         for (int i = 0; i < productList.size(); ++i) {
+            //if the product is already in our cart, just update the quantity
             if (productList.get(i).getProduct().getId() == productId) {
                 productList.get(i).setQuantity(productList.get(i).getQuantity() + quantity);
                 return cartRepository.save(cart);
             }
         }
+
         CartProduct cartProduct = new CartProduct();
         cartProduct.setCart(cart);
         cartProduct.setProduct(product);
@@ -60,21 +65,31 @@ public class CartService {
         if (!product.isPresent() || !user.isPresent()) {
             return null;
         }
+
         Cart cart = getCart(userId);
         List<CartProduct> products = cart.getProductList();
-        for (CartProduct p : products) {
-            if (p.getProduct().getId() == productId) {
+        for(int i=0;i<products.size();++i){             //just iterate over products from cart and remove the one which matches
+            CartProduct p = products.get(i);
+            if(p.getId()==productId){
                 p.getProduct().setStock(p.getProduct().getStock() + p.getQuantity());
-                break;
+                products.remove(p);
+                return cartRepository.save(cart);
             }
         }
-        products = products.stream().filter(p -> p.getProduct().getId() != (product.get().getId())).collect(Collectors.toList());
-        cart.setProductList(products);
-        return cartRepository.save(cart);
+        return cart;        //return unchanged cart if product doesn't exist in user's cart
+
     }
 
+    //an endpoint where i can get all the carts from all the users,
+    //sorted by the total of the products (a product must have a name, price and a quantity)
     public List<Cart> getOrderedByQuantity(){
-        return cartRepository.findAll();
+        return cartRepository.findAll().stream().sorted().collect(Collectors.toList());
+    }
+
+    public Cart clear(Integer id){
+        Cart cart = getCart(id);
+        cart.setProductList(new ArrayList<>()); //don't delete the cart, only clear it's product list
+        return cartRepository.save(cart);
     }
 
 }

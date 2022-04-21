@@ -7,8 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -29,6 +29,11 @@ public class User {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private Wishlist wishlist;
+    @OneToMany
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
+    @JoinColumn(name = "order_id")
+    private List<Order> orderHistory;
 
 
 }

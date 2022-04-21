@@ -7,9 +7,10 @@ import com.example.market.repository.UserRepository;
 import com.example.market.util.ClassMerger;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -49,6 +50,12 @@ public class UserService {
             return userRepository.save(merged);
         }
         return null;
+    }
+
+    //an endpoint where i can get all the users sorted by their number of orders
+    //(users will also have order history, make sure to implement it)
+    public List<User> sortByOrders(){
+        return userRepository.findAll().stream().sorted(Comparator.comparingInt(u -> u.getOrderHistory().size())).collect(Collectors.toList());
     }
 
 

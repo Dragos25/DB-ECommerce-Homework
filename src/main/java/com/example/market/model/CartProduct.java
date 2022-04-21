@@ -21,4 +21,7 @@ public class CartProduct {
     @ManyToOne
     @JsonIgnore
     private Cart cart;
+    @ManyToOne
+    @JsonIgnore
+    private Order order;
 }
