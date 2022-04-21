@@ -1,8 +1,11 @@
 package com.example.market.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.data.annotation.Reference;
@@ -13,20 +16,8 @@ import java.util.List;
 
 @Entity(name="carts")
 @Data
-//@IdClass(Cart.CartPK.class)
 public class Cart {
-//    @Data
-//    @AllArgsConstructor
-//    @NoArgsConstructor
-//    public static class CartPK implements Serializable {
-//        protected Integer userId;
-//        protected Integer productId;
-//    }
-//    @Id
-//    @JoinColumn(name = "id")
-//    private Integer userId;
-//    @Id
-//    @JoinColumn(name="id")
+
     @Id
     @GeneratedValue
     private Integer id;

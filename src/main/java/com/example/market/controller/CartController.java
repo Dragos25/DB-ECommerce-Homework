@@ -1,5 +1,6 @@
 package com.example.market.controller;
 
+import com.example.market.exception.QuantityTooHighException;
 import com.example.market.model.Cart;
 import com.example.market.model.CartProduct;
 import com.example.market.service.CartService;
@@ -7,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("cart")
@@ -26,13 +29,20 @@ public class CartController {
     @PostMapping("/addProduct/{userId}/{productId}/{quantity}")
     public Cart addProductToCart(@PathVariable("productId") Integer productId,
                                  @PathVariable("userId") Integer userId,
-                                 @PathVariable("quantity") Integer quantity){
-        return cartService.addProduct(productId, userId, quantity);
+                                 @PathVariable("quantity") Integer quantity) throws QuantityTooHighException {
+         return cartService.addProduct(productId, userId, quantity);
+
+
     }
 
     @DeleteMapping("/removeProduct/{userId}/{productId}")
     public Cart deleteProductFromCart(@PathVariable("productId") Integer productId,
                                       @PathVariable("userId") Integer userId){
         return cartService.removeProduct(productId, userId);
+    }
+
+    @GetMapping("/getOrderedByQuantity")
+    public List<Cart> getOrderedByQuantity(){
+        return cartService.getOrderedByQuantity();
     }
 }

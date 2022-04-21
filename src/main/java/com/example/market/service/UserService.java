@@ -2,6 +2,7 @@ package com.example.market.service;
 
 import com.example.market.model.Cart;
 import com.example.market.model.User;
+import com.example.market.model.Wishlist;
 import com.example.market.repository.UserRepository;
 import com.example.market.util.ClassMerger;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +30,7 @@ public class UserService {
 
     public User add(User user){
         user.setCart(new Cart());
+        user.setWishlist(new Wishlist());
         return userRepository.save(user);
     }
 

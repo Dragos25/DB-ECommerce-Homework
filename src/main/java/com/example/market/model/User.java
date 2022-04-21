@@ -25,6 +25,10 @@ public class User {
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonIgnore
     private Cart cart;
+    @OneToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnore
+    private Wishlist wishlist;
 
 
 }
