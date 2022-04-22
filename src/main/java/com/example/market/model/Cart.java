@@ -15,7 +15,7 @@ import java.util.List;
 public class Cart implements Comparable<Cart>{
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy =  GenerationType.IDENTITY)
     private Integer id;
 
     @OneToMany(cascade = CascadeType.ALL)

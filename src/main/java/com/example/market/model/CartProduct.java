@@ -13,7 +13,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 public class CartProduct {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy =  GenerationType.IDENTITY)
     private Integer id;
     private Integer quantity;
     @ManyToOne

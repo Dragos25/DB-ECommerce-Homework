@@ -11,7 +11,7 @@ import java.util.List;
 @Data
 public class Wishlist {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy =  GenerationType.IDENTITY)
     private Integer id;
     @OneToMany
     private List<Product> productList;

@@ -14,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 public class Product {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy =  GenerationType.IDENTITY)
     private Integer id;
     private String name;
     private Float price;

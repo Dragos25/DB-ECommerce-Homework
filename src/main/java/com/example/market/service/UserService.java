@@ -3,10 +3,14 @@ package com.example.market.service;
 import com.example.market.model.Cart;
 import com.example.market.model.User;
 import com.example.market.model.Wishlist;
+import com.example.market.repository.CartRepository;
 import com.example.market.repository.UserRepository;
+import com.example.market.repository.WishlistRepository;
 import com.example.market.util.ClassMerger;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -16,6 +20,8 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
+    private final CartRepository cartRepository;
+    private final WishlistRepository wishlistRepository;
 
     public List<User> findAll(){
         return userRepository.findAll();
@@ -30,9 +36,20 @@ public class UserService {
     }
 
     public User add(User user){
-        user.setCart(new Cart());
-        user.setWishlist(new Wishlist());
-        return userRepository.save(user);
+        Cart cart = new Cart();
+        cart.setProductList(new ArrayList<>());
+        cart.setUser(user);
+        Wishlist wishlist = new Wishlist();
+        wishlist.setProductList(new ArrayList<>());
+        wishlist.setUser(user);
+        user  = userRepository.save(user);
+        wishlist = wishlistRepository.save(wishlist);
+        cart = cartRepository.save(cart);
+        user.setCart(cart);
+        user.setWishlist(wishlist);
+
+
+        return user;
     }
 
     public boolean delete(Integer userId){

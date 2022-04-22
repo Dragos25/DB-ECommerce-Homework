@@ -1,4 +1,4 @@
-package com.example.market.unit;
+package com.example.market.unit.service;
 
 import com.example.market.model.Wishlist;
 import com.example.market.repository.ProductRepository;

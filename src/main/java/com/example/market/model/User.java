@@ -16,7 +16,7 @@ import java.util.List;
 @Entity(name="users")
 public class User {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy =  GenerationType.IDENTITY)
     private Integer id;
     private String firstName;
     private String lastName;

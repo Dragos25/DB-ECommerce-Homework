@@ -1,11 +1,13 @@
-package com.example.market.unit;
+package com.example.market.unit.service;
 
 
 import com.example.market.model.Cart;
 import com.example.market.model.Product;
 import com.example.market.model.User;
+import com.example.market.repository.CartRepository;
 import com.example.market.repository.ProductRepository;
 import com.example.market.repository.UserRepository;
+import com.example.market.repository.WishlistRepository;
 import com.example.market.service.ProductService;
 import com.example.market.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,11 +24,15 @@ public class UserServiceTests {
 
     @Mock
     private UserRepository userRepository;
+    @Mock
+    private CartRepository cartRepository;
+    @Mock
+    private WishlistRepository wishlistRepository;
     private UserService userService;
     @BeforeEach
     void init(){
         MockitoAnnotations.openMocks(this);
-        userService = new UserService(userRepository);
+        userService = new UserService(userRepository, cartRepository, wishlistRepository);
     }
 
     @Test
